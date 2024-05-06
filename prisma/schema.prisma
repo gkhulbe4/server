@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum EnrollmentStatus {
+  OPEN
+  CLOSED
+  IN_PROGRESS
+}
+
+model Student {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Course {
+  id               String           @id @default(uuid())
+  course_name      String
+  instructor_name  String
+  description      String
+  enrollmentStatus EnrollmentStatus @default(OPEN)
+  thumbnail        String
+  duration         String
+  schedule         String
+  location         String
+  prerequisites    String[]
+  price            Float
+  syllabus         Chapter[]
+  purchases        Purchase[]
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+}
+
+model Chapter {
+  id        String   @id @default(uuid())
+  week      String
+  topic     String
+  content   String
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Purchase {
+  id          String   @id @default(uuid())
+  userId      String
+  courseId    String
+  course      Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt()
+
+  @@unique([userId, courseId])
+  @@index([courseId])
+}
