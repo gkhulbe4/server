@@ -11,4 +11,5 @@ const app = (0, express_1.default)();
 app.use("/student", student_1.default);
 app.use("/course", course_1.default);
 app.use("/chapter", chapter_1.default);
-app.listen(3000, () => console.log("Server running on port 3000"));
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Server running on port ${port}`));
