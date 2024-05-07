@@ -2,6 +2,8 @@
 
 *) Deployed project link : https://6639281a972737000874449d--subtle-druid-0c3339.netlify.app/
 
+*) Demo video: https://www.loom.com/share/e3149a1e11a244c2a81eb735c7c8a8a5?sid=314b9107-1543-4560-bf0f-0497145b5830
+
 *)Project Overview
 
 The application utilizes a modular architecture with separate client and server folders.
